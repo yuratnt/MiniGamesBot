@@ -45,7 +45,6 @@ public class SlashCommandManager extends ListenerAdapter {
                     .setTitle("Slash Commands Registered")
                     .setDescription("Slash Commands Registered")
                     .build();
-
             event.replyEmbeds(eb).queue();
 
         } catch (SQLException e) {
