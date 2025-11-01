@@ -4,8 +4,9 @@ import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
-import org.tnt.SlashCommands.Front.SlashCommandGui;
-import org.tnt.SlashCommands.Back.SlashCommandManager;
+import org.tnt.Events.SlashCommands.Front.SlashCommandGui;
+import org.tnt.Events.SlashCommands.Back.SlashCommandManager;
+import org.tnt.ServerJoin.JoinServerManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,6 +37,7 @@ public class MiniGamesBot {
 
         shardManager.addEventListener(new SlashCommandManager());
         shardManager.addEventListener(new SlashCommandGui());
+        shardManager.addEventListener(new JoinServerManager());
     }
 
 

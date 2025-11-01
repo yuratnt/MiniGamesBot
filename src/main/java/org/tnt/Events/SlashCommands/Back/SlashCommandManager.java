@@ -1,4 +1,4 @@
-package org.tnt.SlashCommands.Back;
+package org.tnt.Events.SlashCommands.Back;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -6,15 +6,17 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.tnt.SQLManager.SQLManager;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.tnt.MiniGamesBot.connectionSQL;
 
 public class SlashCommandManager extends ListenerAdapter {
-    private Statement statement;
+    private final SQLManager sqlManager = new SQLManager();
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         switch (event.getName()) {
@@ -37,19 +39,23 @@ public class SlashCommandManager extends ListenerAdapter {
     }
 
     private void register(SlashCommandInteractionEvent event) {
-        String userid = Objects.requireNonNull(event.getMember()).getUser().getId();
-        try {
-            statement = connectionSQL.createStatement();
-            statement.executeUpdate("INSERT minigamesbot.users(ID) VALUES ('" + userid + "')");
-            MessageEmbed eb = new EmbedBuilder()
-                    .setTitle("Slash Commands Registered")
-                    .setDescription("Slash Commands Registered")
-                    .build();
-            event.replyEmbeds(eb).queue();
+        MessageEmbed eb = new EmbedBuilder()
+                .setTitle("Slash Commands Registered")
+                .setDescription("Slash Commands Registered")
+                .build();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String[] data = {
+                "Id INT PRIMARY KEY",
+                "Name VARCHAR(100)",
+                "Balance VARCHAR(100) DEFAULT 0",
+                "Energy VARCHAR(100) DEFAULT 100",
+                "Time DATETIME"
+        };
+
+        sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
+        event.replyEmbeds(eb).queue();
+
+
 
     }
 
