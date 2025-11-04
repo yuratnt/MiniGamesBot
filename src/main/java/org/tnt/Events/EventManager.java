@@ -1,6 +1,7 @@
 package org.tnt.Events;
 
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -18,21 +19,27 @@ public class EventManager extends ListenerAdapter {
 
     private final SQLManager sqlManager = new SQLManager();
     private final SlashCommandGui slashCommandGui = new SlashCommandGui();
+
     @Override
-    public void onGuildJoin(GuildJoinEvent event) {
-        slashCommandGui.init(event);
+    public void onGuildJoin(@NotNull GuildJoinEvent event) {
         sqlManager.createSchema(event.getGuild().getId());
+        slashCommandGui.init(event);
+    }
+
+    @Override
+    public void onGuildLeave(GuildLeaveEvent event) {
+        sqlManager.dropSchema(event.getGuild().getId());
+    }
+
+    @Override
+    public void onGuildReady(@NotNull GuildReadyEvent event) {
+        slashCommandGui.init(event);
     }
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         SlashCommandManager slashCommandManager = new SlashCommandManager(event);
         slashCommandManager.usingCommands(event.getName());
-    }
-
-    @Override
-    public void onGuildReady(GuildReadyEvent event) {
-        slashCommandGui.init(event);
     }
 
 }

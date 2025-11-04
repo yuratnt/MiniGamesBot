@@ -34,6 +34,8 @@ public class SlashCommandManager {
             }
         }
     }
+
+    //Основные команды
     private void help() {
         event.reply("Slash Commands Help").queue();
     }
@@ -55,5 +57,6 @@ public class SlashCommandManager {
         sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
         event.replyEmbeds(eb).queue();
     }
+
 
 }

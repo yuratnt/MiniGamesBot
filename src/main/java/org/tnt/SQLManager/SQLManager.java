@@ -26,6 +26,18 @@ public class SQLManager {
             System.out.println("Error creating schema: " + e.getMessage());
         }
     }
+
+    public void dropSchema(String name) {
+        try {
+            Statement createTable = con.createStatement();
+            createTable.executeUpdate(
+                    "DROP SCHEMA `" + name + "`;");
+
+            System.out.println("Schema " + name + " вdropped");
+        } catch (Exception e) {
+            System.out.println("Error dropping schema: " + e.getMessage());
+        }
+    }
     public void createTable(String schemaId, String name, String[] dataType) {
         try {
             for (String s : dataType) sqlData.append(s).append(",\n");
