@@ -14,15 +14,16 @@ public class SQLManager {
         sqlData = new StringBuilder();
     }
 
-    public void createDatabase(String name) {
+
+    public void createSchema(String name) {
         try {
             Statement createTable = con.createStatement();
             createTable.executeUpdate(
                     "CREATE SCHEMA `" + name + "`;");
 
-            System.out.println("Schema created");
+            System.out.println("Schema " + name + " created");
         } catch (Exception e) {
-            System.out.println("Error creating database: " + e.getMessage());
+            System.out.println("Error creating schema: " + e.getMessage());
         }
     }
     public void createTable(String schemaId, String name, String[] dataType) {

@@ -15,30 +15,30 @@ import java.util.Objects;
 
 import static org.tnt.MiniGamesBot.connectionSQL;
 
-public class SlashCommandManager extends ListenerAdapter {
+public class SlashCommandManager {
     private final SQLManager sqlManager = new SQLManager();
-    @Override
-    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        switch (event.getName()) {
+
+    private final SlashCommandInteractionEvent event;
+
+    public SlashCommandManager(SlashCommandInteractionEvent event) {
+        this.event = event;
+    }
+
+    public void usingCommands(String command) {
+        switch (command) {
             case "help" -> {
-                help(event);
+                help();
             }
             case "register" -> {
-                register(event);
+                register();
             }
-
         }
     }
-
-    @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-    }
-
-    private void help(SlashCommandInteractionEvent event) {
+    private void help() {
         event.reply("Slash Commands Help").queue();
     }
 
-    private void register(SlashCommandInteractionEvent event) {
+    protected void register() {
         MessageEmbed eb = new EmbedBuilder()
                 .setTitle("Slash Commands Registered")
                 .setDescription("Slash Commands Registered")
@@ -54,9 +54,6 @@ public class SlashCommandManager extends ListenerAdapter {
 
         sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
         event.replyEmbeds(eb).queue();
-
-
-
     }
 
 }
