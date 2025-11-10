@@ -15,7 +15,6 @@ public class SlashCommandGui extends ListenerAdapter {
 
     private List<CommandData> commandData = new ArrayList<>();
     public void init(GenericGuildEvent event) {
-        System.out.println("SlashCommandGui init");
         mainCommands();
         event.getGuild().updateCommands().addCommands(commandData).queue();
     }
