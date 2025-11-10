@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.tnt.Events.SlashCommands.Commands.Minigames.RPG;
 import org.tnt.Events.SlashCommands.Commands.Other;
 import org.tnt.Events.SlashCommands.SlashCommandGui;
 import org.tnt.Database.DatabaseManager;
@@ -15,6 +16,8 @@ public class EventManager extends ListenerAdapter {
     private final DatabaseManager sqlManager = new DatabaseManager();
     private final SlashCommandGui slashCommandGui = new SlashCommandGui();
 
+    private final Other otherCommands = new Other();
+    private final RPG rpg = new RPG();
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         sqlManager.init(event);
@@ -33,8 +36,8 @@ public class EventManager extends ListenerAdapter {
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        Other slashCommandManager = new Other(event);
-        slashCommandManager.usingCommands(event.getName());
+        otherCommands.usingCommands(event);
+        rpg.usingCommands(event);
     }
 
 }

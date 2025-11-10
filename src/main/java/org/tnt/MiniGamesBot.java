@@ -51,5 +51,4 @@ public class MiniGamesBot {
 
         System.out.println("Бот работает");
     }
-
 }

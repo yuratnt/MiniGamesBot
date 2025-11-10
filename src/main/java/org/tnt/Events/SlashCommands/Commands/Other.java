@@ -8,19 +8,13 @@ import org.tnt.Database.DatabaseManager;
 public class Other {
     private final DatabaseManager sqlManager = new DatabaseManager();
 
-    private final SlashCommandInteractionEvent event;
+    private SlashCommandInteractionEvent event;
 
-    public Other(SlashCommandInteractionEvent event) {
+    public void usingCommands(SlashCommandInteractionEvent event) {
         this.event = event;
-    }
-
-    public void usingCommands(String command) {
-        switch (command) {
+        switch (event.getName()) {
             case "help" -> {
                 help();
-            }
-            case "register" -> {
-                register();
             }
         }
     }
