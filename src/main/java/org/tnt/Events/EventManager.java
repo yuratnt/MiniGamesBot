@@ -5,24 +5,19 @@ import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
-import org.tnt.Events.SlashCommands.Back.SlashCommandManager;
-import org.tnt.Events.SlashCommands.Front.SlashCommandGui;
-import org.tnt.SQLManager.SQLManager;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.tnt.Events.SlashCommands.Commands.Other;
+import org.tnt.Events.SlashCommands.SlashCommandGui;
+import org.tnt.Database.DatabaseManager;
 
 public class EventManager extends ListenerAdapter {
 
-    private final SQLManager sqlManager = new SQLManager();
+    private final DatabaseManager sqlManager = new DatabaseManager();
     private final SlashCommandGui slashCommandGui = new SlashCommandGui();
 
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
-        sqlManager.createSchema(event.getGuild().getId());
+        sqlManager.init(event);
         slashCommandGui.init(event);
     }
 
@@ -38,7 +33,7 @@ public class EventManager extends ListenerAdapter {
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        SlashCommandManager slashCommandManager = new SlashCommandManager(event);
+        Other slashCommandManager = new Other(event);
         slashCommandManager.usingCommands(event.getName());
     }
 

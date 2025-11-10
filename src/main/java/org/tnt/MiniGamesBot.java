@@ -5,8 +5,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import org.tnt.Events.EventManager;
-import org.tnt.Events.SlashCommands.Front.SlashCommandGui;
-import org.tnt.Events.SlashCommands.Back.SlashCommandManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

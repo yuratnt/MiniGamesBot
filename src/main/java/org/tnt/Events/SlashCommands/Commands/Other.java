@@ -1,26 +1,16 @@
-package org.tnt.Events.SlashCommands.Back;
+package org.tnt.Events.SlashCommands.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
-import org.tnt.SQLManager.SQLManager;
+import org.tnt.Database.DatabaseManager;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Objects;
-
-import static org.tnt.MiniGamesBot.connectionSQL;
-
-public class SlashCommandManager {
-    private final SQLManager sqlManager = new SQLManager();
+public class Other {
+    private final DatabaseManager sqlManager = new DatabaseManager();
 
     private final SlashCommandInteractionEvent event;
 
-    public SlashCommandManager(SlashCommandInteractionEvent event) {
+    public Other(SlashCommandInteractionEvent event) {
         this.event = event;
     }
 
@@ -36,7 +26,8 @@ public class SlashCommandManager {
     }
 
     //Основные команды
-    private void help() {
+    private void help(){
+        sqlManager.getString(event.getGuild().getId(), event.getMember().getId(), "Id");
         event.reply("Slash Commands Help").queue();
     }
 
@@ -47,7 +38,7 @@ public class SlashCommandManager {
                 .build();
 
         String[] data = {
-                "Id INT PRIMARY KEY",
+                "Id VARCHAR(45) PRIMARY KEY",
                 "Name VARCHAR(100)",
                 "Balance VARCHAR(100) DEFAULT 0",
                 "Energy VARCHAR(100) DEFAULT 100",
@@ -57,6 +48,4 @@ public class SlashCommandManager {
         sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
         event.replyEmbeds(eb).queue();
     }
-
-
 }
