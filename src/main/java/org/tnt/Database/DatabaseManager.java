@@ -24,7 +24,9 @@ public class DatabaseManager {
                 "Id VARCHAR(45) PRIMARY KEY",
                 "Class VARCHAR(45)",
                 "Level INTEGER DEFAULT 0",
-                "Enemy VARCHAR(45)"
+                "Enemy VARCHAR(45)",
+                "ChanelID VARCHAR(45)",
+                "Thread VARCHAR(45)"
         };
 
         createSchema(guildId);
