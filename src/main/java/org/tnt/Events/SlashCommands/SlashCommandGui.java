@@ -38,6 +38,7 @@ public class SlashCommandGui extends ListenerAdapter {
                         )
                 )
                 .addSubcommands(new SubcommandData("play", "Запускает миниигру РПГ приключение"))
+
         );
     }
 
