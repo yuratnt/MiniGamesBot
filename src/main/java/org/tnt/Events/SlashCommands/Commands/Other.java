@@ -4,18 +4,25 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.tnt.Database.DatabaseManager;
+import org.tnt.DescriptionCommands.DescriptionCommands;
 
 public class Other {
     private final DatabaseManager sqlManager = new DatabaseManager();
+
+    private final DescriptionCommands descriptionCommands = new DescriptionCommands();
 
     private SlashCommandInteractionEvent event;
 
     public void usingCommands(SlashCommandInteractionEvent event) {
         this.event = event;
-        switch (event.getName()) {
-            case "help" -> {
-                help();
-            }
+        if (event.getSubcommandName() == null)
+            event.replyEmbeds(descriptionCommands.commandsError("No subcommand found")).queue();
+
+        switch (event.getSubcommandName()) {
+            case "help" -> help();
+
+            case "register" -> register();
+
         }
     }
 
@@ -25,7 +32,7 @@ public class Other {
         event.reply("Slash Commands Help").queue();
     }
 
-    protected void register() {
+    private void register() {
         MessageEmbed eb = new EmbedBuilder()
                 .setTitle("Slash Commands Registered")
                 .setDescription("Slash Commands Registered")
@@ -40,6 +47,11 @@ public class Other {
         };
 
         sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
-        event.replyEmbeds(eb).queue();
+        event.replyEmbeds(descriptionCommands.messageEmbed("Пользователь зарегистрирован", "Пользователь " + event.getMember() + " зарегистрирован и может приступать к играм")).queue();
+    }
+
+    private void initialization() {
+
+
     }
 }

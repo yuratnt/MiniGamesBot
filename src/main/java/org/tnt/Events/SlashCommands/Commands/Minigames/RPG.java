@@ -19,6 +19,8 @@ public class RPG {
     private SlashCommandInteractionEvent event;
     public void usingCommands(SlashCommandInteractionEvent event) {
         this.event = event;
+        if (event.getSubcommandName() == null)
+            event.replyEmbeds(descriptionCommands.commandsError("No subcommand found")).queue();
         if (event.getName().equals("rpg")) {
             switch (event.getSubcommandName()) {
                 case "help" -> help();

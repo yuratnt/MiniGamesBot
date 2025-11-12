@@ -8,13 +8,13 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.tnt.Events.SlashCommands.Commands.Minigames.RPG;
 import org.tnt.Events.SlashCommands.Commands.Other;
-import org.tnt.Events.SlashCommands.SlashCommandGui;
+import org.tnt.Events.SlashCommands.GuiManager;
 import org.tnt.Database.DatabaseManager;
 
 public class EventManager extends ListenerAdapter {
 
     private final DatabaseManager sqlManager = new DatabaseManager();
-    private final SlashCommandGui slashCommandGui = new SlashCommandGui();
+    private final GuiManager slashCommandGui = new GuiManager();
 
     private final Other otherCommands = new Other();
     private final RPG rpg = new RPG();

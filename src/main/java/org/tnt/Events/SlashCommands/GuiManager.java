@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlashCommandGui extends ListenerAdapter {
+public class GuiManager extends ListenerAdapter {
 
     List<CommandData> commandData = new ArrayList<>();
 
@@ -26,6 +26,7 @@ public class SlashCommandGui extends ListenerAdapter {
 
         commandData.add(Commands.slash("bot", "Содержит различные вспомогательные команды бота")
                 .addSubcommands(new SubcommandData("help", "Информация о боте и его основных командах"))
+                .addSubcommands(new SubcommandData("register", "Регистрирует ваш профиль на данном сервере для начала использования минигр"))
                 .addSubcommands(new SubcommandData("initialization", "Обязательная команды для работы бота. Устанавливает чат, в котором будут проводиться минигры")
                         .addOptions(new OptionData(OptionType.CHANNEL, "chanel", "Чат, в котором будут проводиться минигры", true))
                 )

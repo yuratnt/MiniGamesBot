@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 
 import static org.tnt.MiniGamesBot.connectionSQL;
 
@@ -21,7 +20,7 @@ public class DatabaseManager {
 
     public void init(GenericGuildEvent event) {
         String guildId = event.getGuild().getId();
-        String[] data = {
+        String[] rpgData = {
                 "Id VARCHAR(45) PRIMARY KEY",
                 "Class VARCHAR(45)",
                 "Level INTEGER DEFAULT 0",
@@ -30,8 +29,14 @@ public class DatabaseManager {
                 "Thread VARCHAR(45)"
         };
 
+        String[] settingsData = {
+                "Id VARCHAR(45) PRIMARY KEY",
+                "ChanelID VARCHAR(45)"
+        };
+
         createSchema(guildId);
-        createTable(guildId,"rpg", data);
+        createTable(guildId,"rpg", rpgData);
+        createTable(guildId,"settings", settingsData);
     }
 
     public boolean createSchema(String name) {
