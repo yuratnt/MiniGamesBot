@@ -1,6 +1,10 @@
 package org.tnt.Events.SlashCommands.Commands.Minigames;
 
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.requests.restaction.ThreadChannelAction;
 import org.tnt.Database.DatabaseManager;
 import org.tnt.DescriptionCommands.DescriptionCommands;
 
@@ -50,10 +54,11 @@ public class RPG {
         } else {
             event.replyEmbeds(descriptionCommands.commandsError("Ошибка создания персонажа")).queue();
         }
-
     }
 
     private void play() {
-
+        TextChannel channel = event.getChannel().asTextChannel();
+        channel.createThreadChannel("RPG игрока " + event.getMember().getEffectiveName()).queue();
+        event.replyEmbeds(descriptionCommands.messageEmbed("RPG", "Игра создана")).queue();
     }
 }
