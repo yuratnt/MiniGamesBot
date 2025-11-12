@@ -23,7 +23,13 @@ public class SlashCommandGui extends ListenerAdapter {
     }
 
     private void otherCommands() {
-        commandData.add(Commands.slash("help", "Информация о командах бота"));
+
+        commandData.add(Commands.slash("bot", "Содержит различные вспомогательные команды бота")
+                .addSubcommands(new SubcommandData("help", "Информация о боте и его основных командах"))
+                .addSubcommands(new SubcommandData("initialization", "Обязательная команды для работы бота. Устанавливает чат, в котором будут проводиться минигры")
+                        .addOptions(new OptionData(OptionType.CHANNEL, "chanel", "Чат, в котором будут проводиться минигры", true))
+                )
+        );
     }
 
     private void rpg() {
