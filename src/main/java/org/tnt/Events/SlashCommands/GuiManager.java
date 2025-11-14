@@ -24,7 +24,7 @@ public class GuiManager extends ListenerAdapter {
 
     private void otherCommands() {
 
-        commandData.add(Commands.slash("bot", "Содержит различные вспомогательные команды бота")
+        commandData.add(Commands.slash("settings", "Содержит различные вспомогательные команды бота")
                 .addSubcommands(new SubcommandData("help", "Информация о боте и его основных командах"))
                 .addSubcommands(new SubcommandData("register", "Регистрирует ваш профиль на данном сервере для начала использования минигр"))
                 .addSubcommands(new SubcommandData("initialization", "Обязательная команды для работы бота. Устанавливает чат, в котором будут проводиться минигры")

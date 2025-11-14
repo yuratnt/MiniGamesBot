@@ -31,6 +31,7 @@ public class DatabaseManager {
 
         String[] settingsData = {
                 "Id VARCHAR(45) PRIMARY KEY",
+                "Localization VARCHAR(2) DEFAULT 'EN'",
                 "ChanelID VARCHAR(45)"
         };
 
@@ -111,11 +112,11 @@ public class DatabaseManager {
         }
     }
 
-    public String getString(String schemaId, String name, String dataType) {
+    public String getData(String schemaId, String name, String dataType) {
         try {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT " + dataType +" FROM " + schemaId + "." + name
+                    "SELECT * FROM " + schemaId + "." + name + " WHERE id = value;"
             );
 
             while (resultSet.next()) {
@@ -126,7 +127,5 @@ public class DatabaseManager {
             throw new RuntimeException(e);
         }
     }
-
-
 }
 
