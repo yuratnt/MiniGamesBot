@@ -1,11 +1,12 @@
 {
   "other": {
-    "help": {
-
-    },
-    "register": {
-      "title": "Пользователь зарегистрирован",
-      "description": "Пользователь USER зарегистрирован и может приступать к играм"
+    "settings": {
+      "description": "Пользователь USER зарегистрирован и может приступать к играм",
+      "subcommands": {
+        "help": "",
+        "register": "",
+        "initialization": ""
+      }
     }
   }
 }

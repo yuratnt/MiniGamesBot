@@ -31,7 +31,7 @@ public class LocalizationManager {
     private String getData(String command,String key) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode config = mapper.readTree(new File("Localization/RU.json"));
+            JsonNode config = mapper.readTree(new File("Localization/RU/Command.json"));
             return config.path(type).path(command).get(key).asText();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -41,7 +41,7 @@ public class LocalizationManager {
     private String getData(String command, String path, String key) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode config = mapper.readTree(new File("Localization/RU.json"));
+            JsonNode config = mapper.readTree(new File("Localization/RU/Command.json"));
             return config.path(type).path(path).path(command).get(key).asText();
         } catch (IOException e) {
             System.out.println(e.getMessage());
