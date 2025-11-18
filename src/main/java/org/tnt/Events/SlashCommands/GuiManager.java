@@ -17,6 +17,7 @@ public class GuiManager extends ListenerAdapter {
 
     List<CommandData> commandData = new ArrayList<>();
 
+    private final LocalizationManager localization = new LocalizationManager();
 
     public void init(GenericGuildEvent event) {
         commandData.clear();
@@ -26,68 +27,59 @@ public class GuiManager extends ListenerAdapter {
     }
 
     private void otherCommands() {
-        LocalizationManager localizationRu = new LocalizationManager("RU", "other");
-        LocalizationManager localizationEN = new LocalizationManager("EN", "other");
+        localization.setCommand("settings");
+        localization.getDescriptionCommand();
 
-
-        commandData.add(Commands.slash("settings", localizationEN.getDescription("settings"))
-                //Локализация
-                .setDescriptionLocalization(
-                        DiscordLocale.RUSSIAN,
-                        localizationRu.getDescription("settings")
+        commandData.add(Commands.slash("settings", localization.setLanguage("EN").getDescriptionCommand())
+                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getDescriptionCommand()
                 )
 
                 //подкоманды
                 .addSubcommands(new SubcommandData(
                         "help",
-                        localizationEN.getSubcommandDescription("settings", "help")
-                        )
-                        .setDescriptionLocalization(
-                                DiscordLocale.RUSSIAN,
-                                localizationRu.getSubcommandDescription("settings", "help")
-                        )
+                        localization.setLanguage("EN").getSubcommandDescription("help"))
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("help"))
                 )
                 .addSubcommands(new SubcommandData(
                         "register",
-                        localizationEN.getSubcommandDescription(
-                                "settings",
-                                "register"
-                        ))
-                        .setDescriptionLocalization(
-                                DiscordLocale.RUSSIAN,
-                                localizationRu.getSubcommandDescription(
-                                        "settings",
-                                        "register"
-                                ))
+                        localization.setLanguage("EN").getSubcommandDescription("register"))
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("register"))
                 )
                 .addSubcommands(new SubcommandData(
                         "initialization",
-                        localizationEN.getSubcommandDescription(
-                                "settings",
-                                "initialization"
-                        ))
-                        .setDescriptionLocalization(
-                                DiscordLocale.RUSSIAN,
-                                localizationRu.getSubcommandDescription(
-                                        "settings",
-                                        "initialization"
-                                ))
+                        localization.setLanguage("EN").getSubcommandDescription("initialization"))
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("initialization"))
                         .addOptions(new OptionData(
                                 OptionType.CHANNEL,
                                 "chanel",
-                                "Чат, в котором будут проводиться минигры",
-                                true
-                        ))
+                                localization.setLanguage("EN").getSubcommandOption("initialization", "chanel"
+                                ),
+                                true)
+                                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandOption("initialization", "chanel"))
+                        )
                 )
         );
     }
 
     private void rpg() {
+        localization.setCommand("rpg");
+
         commandData.add(Commands.slash("rpg", "Команды для управления rog миниигры")
                 .addSubcommands(new SubcommandData("help", "Информация о миниигре"))
                 .addSubcommands(new SubcommandData("register", "Создание персонажа для начала игры")
-                        .addOptions(new OptionData(OptionType.STRING, "class", "Выберете класс персонажа", true)
-                                .addChoice("Воин", "Warrior")
+                        .addOptions(new OptionData(
+                                OptionType.STRING,
+                                "class",
+                                "Выберете класс персонажа",
+                                true
+                                )
+                                .addChoice("Воин", "Warrior").setDescriptionLocalization(
+                                        DiscordLocale.RUSSIAN,
+                                        localization.setLanguage("RU").getSubCommandOptionChoice(
+                                                "register",
+                                                "class",
+                                                "warrior")
+                                )
                                 .addChoice("Волшебник", "Mage")
                                 .addChoice("Лучник", "Archer")
                                 .addChoice("Разбойник", "Rogue")

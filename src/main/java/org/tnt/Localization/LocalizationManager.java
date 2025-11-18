@@ -2,7 +2,6 @@ package org.tnt.Localization;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.intellij.lang.annotations.Language;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,38 +9,83 @@ import java.io.IOException;
 public class LocalizationManager {
 
 
-    private final String language;
-    private final String type;
+    private String language = "EN";
+    private String command = "test";
 
-    public LocalizationManager(String language, String type) {
+
+    public LocalizationManager setLanguage(String language) {
         this.language = language;
-        this.type = type;
+        return this;
     }
-
-    public String getDescription(String command) {
-        return getData(command, null ,"description");
-
+    public void setCommand(String command) {
+        this.command = command;
     }
-    public String getSubcommandDescription(String command, String subcommand) {
-        String[] subcommandPath = new String[] {
-                "subcommands",
-                "description"
+    public String getDescriptionCommand() {
+        String[] path = new String[] {
+                command
         };
-        return getData(command, subcommandPath, subcommand);
+        return getData(path);
+
+    }
+    public String getSubcommandDescription(String subcommand) {
+        String[] path = new String[] {
+                command,
+                "subcommands",
+                subcommand
+        };
+        return getData(path);
     }
 
-    public String getCommandOption(String command, String option) {
-        String[] commandPath = new String[] {
+    public String getSubcommandOption(String subcommand, String option) {
+        String[] path = new String[] {
+                command,
+                "subcommands",
+                subcommand,
                 "options"
         };
-        return getData(command, commandPath, option);
+        return getData(path, option);
     }
 
-    private String getData(String command, String[] path, String key) {
+    public String getCommandOption(String option) {
+        String[] path = new String[] {
+                command,
+                "options"
+        };
+        return getData(path, option);
+    }
+    public String getCommandOptionChoice(String option, String choice) {
+        String[] path = new String[] {
+                command,
+                "options",
+                option,
+                "choices"
+        };
+        return getData(path, choice);
+    }
+
+    public String getSubCommandOptionChoice(String subcommand, String option, String choice) {
+        String[] path = new String[] {
+                command,
+                "subcommands",
+                subcommand,
+                "options",
+                option,
+                "choices"
+        };
+        return getData(path, choice);
+    }
+
+    private String getData(String[] path) {
+        return dataManager(path, "description");
+    }
+    private String getData(String[]  path, String key) {
+        return dataManager(path, key);
+    }
+
+    private String dataManager(String[] path, String key) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode config = mapper.readTree(new File("src/main/resources/Localization/" + language + "/Command.json"));
-            config = config.path(type).path(command);
             if (path != null) {
                 for (String s : path) {
                     if (s != null && !s.isEmpty()) {

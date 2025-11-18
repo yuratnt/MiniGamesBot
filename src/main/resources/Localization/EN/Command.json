@@ -1,11 +1,39 @@
 {
-  "other": {
-    "settings": {
-      "description": "Command for bot settings configuration",
-      "subcommands": {
-        "help": "Displays help for settings commands",
-        "register": "Registers a user to start using mini-games",
-        "initialization": "Sets the channel where the bot will run mini-games"
+  "settings": {
+    "description": "Bot settings command",
+    "subcommands": {
+      "help": {
+        "description": "Displays help on settings commands"
+      },
+      "register": {
+        "description": "Registers user to start using mini-games"
+      },
+      "initialization": {
+        "description": "Sets the channel where the bot will conduct mini-games",
+        "options": {
+          "chanel": "Chat where mini-games will be conducted"
+        }
+      }
+    }
+  },
+  "rpg": {
+    "description": "Groups all commands intended for the \"RPG Adventure\" mini-game",
+    "subcommands": {
+      "help": {
+        "description": "Displays summary of rpg command capabilities"
+      },
+      "register": {
+        "description": "Character creation to start the game",
+        "options": {
+          "class": {
+            "choices": {
+              "warrior": "Warrior",
+              "mage": "Mage",
+              "archer": "Archer",
+              "rogue": "Rogue"
+            }
+          }
+        }
       }
     }
   }
