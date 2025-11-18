@@ -2,87 +2,56 @@ package org.tnt.Localization;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.tnt.Localization.Interfaces.*;
+
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class LocalizationManager {
-
-
-    private String language = "EN";
-    private String command = "test";
+public class LocalizationManager implements LanguageLocalization, CommandLocalization, SubcommandLocalization, OptionLocalization, ChoiceLocalization, DescriptionLocalization {
 
 
-    public LocalizationManager setLanguage(String language) {
+    private String language;
+    private ArrayList<String> path = new ArrayList<>();
+    private String key;
+
+
+    @Override
+    public CommandLocalization setLanguage(String language) {
+        path.clear();
+        this.key = "description";
         this.language = language;
         return this;
     }
-    public void setCommand(String command) {
-        this.command = command;
+    @Override
+    public DescriptionLocalization atCommand(String command) {
+        path.add(command);
+        return this;
     }
-    public String getDescriptionCommand() {
-        String[] path = new String[] {
-                command
-        };
-        return getData(path);
-
+    @Override
+    public SubcommandLocalization atSubcommand(String subcommand) {
+        path.add("subcommands");
+        path.add(subcommand);
+        return this;
     }
-    public String getSubcommandDescription(String subcommand) {
-        String[] path = new String[] {
-                command,
-                "subcommands",
-                subcommand
-        };
-        return getData(path);
+    @Override
+    public OptionLocalization atOption(String option) {
+        path.add("options");
+        key = option;
+        return this;
     }
-
-    public String getSubcommandOption(String subcommand, String option) {
-        String[] path = new String[] {
-                command,
-                "subcommands",
-                subcommand,
-                "options"
-        };
-        return getData(path, option);
+    @Override
+    public ChoiceLocalization atChoice(String choice) {
+        key = choice;
+        return this;
     }
 
-    public String getCommandOption(String option) {
-        String[] path = new String[] {
-                command,
-                "options"
-        };
-        return getData(path, option);
+    @Override
+    public String getDescription() {
+        return getData();
     }
-    public String getCommandOptionChoice(String option, String choice) {
-        String[] path = new String[] {
-                command,
-                "options",
-                option,
-                "choices"
-        };
-        return getData(path, choice);
-    }
-
-    public String getSubCommandOptionChoice(String subcommand, String option, String choice) {
-        String[] path = new String[] {
-                command,
-                "subcommands",
-                subcommand,
-                "options",
-                option,
-                "choices"
-        };
-        return getData(path, choice);
-    }
-
-    private String getData(String[] path) {
-        return dataManager(path, "description");
-    }
-    private String getData(String[]  path, String key) {
-        return dataManager(path, key);
-    }
-
-    private String dataManager(String[] path, String key) {
+    private String getData() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode config = mapper.readTree(new File("src/main/resources/Localization/" + language + "/Command.json"));

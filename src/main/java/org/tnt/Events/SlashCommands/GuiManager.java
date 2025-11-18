@@ -27,43 +27,38 @@ public class GuiManager extends ListenerAdapter {
     }
 
     private void otherCommands() {
-        localization.setCommand("settings");
-        localization.getDescriptionCommand();
 
-        commandData.add(Commands.slash("settings", localization.setLanguage("EN").getDescriptionCommand())
-                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getDescriptionCommand()
+        commandData.add(Commands.slash("settings", localization.setLanguage("EN").atCommand("settings").getDescription())
+                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").atCommand("settings").getDescription()
                 )
 
                 //подкоманды
                 .addSubcommands(new SubcommandData(
                         "help",
-                        localization.setLanguage("EN").getSubcommandDescription("help"))
-                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("help"))
+                        localization.setLanguage("EN").atCommand("settings").atSubcommand("help").getDescription())
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").atCommand("settings").atSubcommand("help").getDescription())
                 )
                 .addSubcommands(new SubcommandData(
                         "register",
-                        localization.setLanguage("EN").getSubcommandDescription("register"))
-                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("register"))
+                        localization.setLanguage("EN").atCommand("settings").atSubcommand("register").getDescription())
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").atCommand("settings").atSubcommand("register").getDescription())
                 )
                 .addSubcommands(new SubcommandData(
                         "initialization",
-                        localization.setLanguage("EN").getSubcommandDescription("initialization"))
-                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandDescription("initialization"))
+                        localization.setLanguage("EN").atCommand("settings").atSubcommand("initialization").getDescription())
+                        .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").atCommand("settings").atSubcommand("initialization").getDescription())
                         .addOptions(new OptionData(
                                 OptionType.CHANNEL,
                                 "chanel",
-                                localization.setLanguage("EN").getSubcommandOption("initialization", "chanel"
-                                ),
+                                localization.setLanguage("EN").atCommand("settings").atSubcommand("initialization").atOption("chanel").getDescription(),
                                 true)
-                                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getSubcommandOption("initialization", "chanel"))
+                                .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").atCommand("settings").atSubcommand("initialization").atOption("chanel").getDescription())
                         )
                 )
         );
     }
 
     private void rpg() {
-        localization.setCommand("rpg");
-
         commandData.add(Commands.slash("rpg", "Команды для управления rog миниигры")
                 .addSubcommands(new SubcommandData("help", "Информация о миниигре"))
                 .addSubcommands(new SubcommandData("register", "Создание персонажа для начала игры")
@@ -73,13 +68,7 @@ public class GuiManager extends ListenerAdapter {
                                 "Выберете класс персонажа",
                                 true
                                 )
-                                .addChoice("Воин", "Warrior").setDescriptionLocalization(
-                                        DiscordLocale.RUSSIAN,
-                                        localization.setLanguage("RU").getSubCommandOptionChoice(
-                                                "register",
-                                                "class",
-                                                "warrior")
-                                )
+                                .addChoice("Воин", "Warrior")
                                 .addChoice("Волшебник", "Mage")
                                 .addChoice("Лучник", "Archer")
                                 .addChoice("Разбойник", "Rogue")
