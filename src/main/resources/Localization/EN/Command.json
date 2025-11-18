@@ -1,0 +1,12 @@
+{
+  "other": {
+    "settings": {
+      "description": "Command for bot settings configuration",
+      "subcommands": {
+        "help": "Displays help for settings commands",
+        "register": "Registers a user to start using mini-games",
+        "initialization": "Sets the channel where the bot will run mini-games"
+      }
+    }
+  }
+}
