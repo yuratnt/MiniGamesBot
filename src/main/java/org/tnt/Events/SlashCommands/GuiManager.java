@@ -44,7 +44,7 @@ public class GuiManager extends ListenerAdapter {
                 )
                 .addSubcommands(new SubcommandData(
                         "initialization",
-                        localization.setLanguage("EN").atCommand("settings").atSubcommand("initialization").getDescription())
+                        localization.setLanguage("EN").atSubcommand("initialization").getDescription())
                         .setDescriptionLocalization(DiscordLocale.RUSSIAN, localization.setLanguage("RU").getDescription())
                         .addOptions(new OptionData(
                                 OptionType.CHANNEL,

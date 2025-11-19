@@ -3,18 +3,22 @@ package org.tnt.Events.SlashCommands.Commands;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.tnt.Database.DatabaseManager;
 import org.tnt.DescriptionCommands.DescriptionCommands;
+import org.tnt.Localization.LocalizationManager;
+import org.tnt.Localization.Message.LocalizationMessage;
 
 public class Settings {
     private final DatabaseManager sqlManager = new DatabaseManager();
 
-    private final DescriptionCommands descriptionCommands = new DescriptionCommands();
+    private final DescriptionCommands description = new DescriptionCommands();
 
     private SlashCommandInteractionEvent event;
+
+    private LocalizationMessage localization = new LocalizationMessage();
 
     public void usingCommands(SlashCommandInteractionEvent event) {
         this.event = event;
         if (event.getSubcommandName() == null)
-            event.replyEmbeds(descriptionCommands.commandsError("No subcommand found")).queue();
+            event.replyEmbeds(description.commandsError("No subcommand found")).queue();
 
         switch (event.getSubcommandName()) {
             case "help" -> help();
@@ -29,8 +33,14 @@ public class Settings {
 
     //Основные команды
     private void help(){
-        sqlManager.getData(event.getGuild().getId(), event.getMember().getId(), "Id");
-        event.reply("Slash Commands Help").queue();
+        localization.setLanguage("RU").atMessage("settings help");
+        String[][] fields = new String[][]{
+                {localization.atField("help").getTitle(), localization.atField("help").getDescription()},
+                {localization.atField("initialization").getTitle(), localization.atField("initialization").getDescription()},
+                {localization.atField("register").getTitle(), localization.atField("register").getDescription()}
+        };
+        localization.atMessage("settings help");
+        event.replyEmbeds(description.embedField(localization.getTitle(), localization.getDescription(), fields)).queue();
     }
 
     private void register() {
@@ -43,6 +53,6 @@ public class Settings {
         };
 
         sqlManager.createTable(event.getGuild().getId(), event.getMember().getId() , data);
-        event.replyEmbeds(descriptionCommands.messageEmbed("Пользователь зарегистрирован", "Пользователь " + event.getMember() + " зарегистрирован и может приступать к играм")).queue();
+        event.replyEmbeds(description.messageEmbed("Пользователь зарегистрирован", "Пользователь " + event.getMember() + " зарегистрирован и может приступать к играм")).queue();
     }
 }

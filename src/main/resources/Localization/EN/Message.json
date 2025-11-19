@@ -1,0 +1,20 @@
+{
+  "settings help": {
+    "title": "Information about settings category commands",
+    "description": "",
+    "fields": {
+      "help": {
+        "title": "settings help",
+        "description": "Displays help with commands in the settings category"
+      },
+      "initialization": {
+        "title": "settings initialization",
+        "description": "For the bot to work, you need to specify a chat where the bot will conduct minigames. The chat is set in the 'chanel' parameter"
+      },
+      "register": {
+        "title": "settings register",
+        "description": "This command adds your profile to the bot's database so you can use any of the offered minigames"
+      }
+    }
+  }
+}

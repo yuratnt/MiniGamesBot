@@ -9,14 +9,15 @@ import java.util.ArrayList;
 
 public class LocalizationManager {
 
+    public String filename;
     public String language;
     public ArrayList<String> path = new ArrayList<>();
-    public String key = "description";
+    public String key;
 
     public String getData() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode config = mapper.readTree(new File("src/main/resources/Localization/" + language + "/Command.json"));
+            JsonNode config = mapper.readTree(new File("src/main/resources/Localization/" + language + "/"+ filename + ".json"));
             if (path != null) {
                 for (String s : path) {
                     if (s != null && !s.isEmpty()) {

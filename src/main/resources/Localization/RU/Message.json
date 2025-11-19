@@ -1,0 +1,20 @@
+{
+  "settings help":{
+    "title": "Сведения о командах категории settings",
+    "description": "",
+    "fields": {
+      "help": {
+        "title": "settings help",
+        "description": "Вызывает справку с командами категории settings"
+      },
+      "initialization": {
+        "title": "settings initialization",
+        "description": "Для работы бота требуется выделить чат, в котором бот будет проводить минигры. Чат указывается в параметр chanel"
+      },
+      "register": {
+        "title": "settings register",
+        "description": "Данная команда заносит ваш профиль в базу данных бота, чтобы вы могли использовать любую из предложенных миниигр"
+      }
+    }
+  }
+}

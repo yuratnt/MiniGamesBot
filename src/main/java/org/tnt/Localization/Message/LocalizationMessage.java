@@ -8,6 +8,9 @@ import org.tnt.Localization.Message.Interfaces.Message;
 
 public class LocalizationMessage extends LocalizationManager implements Language, Message, Description, Field {
 
+    public LocalizationMessage() {
+        this.filename = "Message";
+    }
 
     @Override
     public Message setLanguage(String language) {
@@ -17,25 +20,31 @@ public class LocalizationMessage extends LocalizationManager implements Language
 
     @Override
     public Description atMessage(String message) {
-
+        path.clear();
+        path.add(message);
         return this;
     }
 
     @Override
-    public Field atField() {
-
+    public Field atField(String field) {
+        if (!path.contains("fields")) {
+            path.add("fields");
+        } else {
+            path.removeLast();
+        }
+        path.add(field);
         return this;
     }
 
     @Override
     public String getTitle() {
-
+        this.key = "title";
         return getData();
     }
 
     @Override
     public String getDescription() {
-
+        this.key = "description";
         return getData();
     }
 }

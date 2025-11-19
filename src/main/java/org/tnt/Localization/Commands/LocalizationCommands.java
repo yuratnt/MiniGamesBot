@@ -5,6 +5,10 @@ import org.tnt.Localization.LocalizationManager;
 
 public class LocalizationCommands extends LocalizationManager implements Language, Command, Subcommand, Option, Choice, Description {
 
+    public LocalizationCommands() {
+        this.filename = "Commands";
+        this.key = "description";
+    }
     @Override
     public Command setLanguage(String language) {
         this.language = language;
