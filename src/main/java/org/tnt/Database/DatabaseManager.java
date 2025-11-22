@@ -11,13 +11,17 @@ public class DatabaseManager {
 
     private final Connection con = connectionSQL;
     private final StringBuilder sqlData;
+    private Statement statement;
 
     public DatabaseManager() {
+        try {
+            this.statement = con.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         sqlData = new StringBuilder();
     }
-
-    public void init(GenericGuildEvent event) {
-        String guildId = event.getGuild().getId();
+    public void init(String guildId) {
         String[] rpgData = {
                 "Id VARCHAR(45) PRIMARY KEY",
                 "Class VARCHAR(45)",
@@ -40,9 +44,7 @@ public class DatabaseManager {
 
     public boolean createSchema(@NotNull String name) {
         try {
-            Statement createTable = con.createStatement();
-
-            createTable.executeUpdate(
+            statement.executeUpdate(
                     "CREATE SCHEMA `" + name + "`;");
 
             System.out.println("Schema " + name + " created");
@@ -55,9 +57,7 @@ public class DatabaseManager {
 
     public boolean dropSchema(@NotNull String name) {
         try {
-            Statement createTable = con.createStatement();
-
-            createTable.executeUpdate(
+            statement.executeUpdate(
                     "DROP SCHEMA `" + name + "`;");
 
             System.out.println("Schema " + name + " вdropped");
@@ -71,9 +71,7 @@ public class DatabaseManager {
         try {
             for (String s : dataType) sqlData.append(s).append(",\n");
             sqlData.deleteCharAt(sqlData.length() - 2);
-
-            Statement createTable = con.createStatement();
-            createTable.executeUpdate(
+            statement.executeUpdate(
                     "CREATE TABLE `" + schema + "`.`" + name + "` (" +
                             sqlData + ")"
             );

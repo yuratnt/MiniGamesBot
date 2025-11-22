@@ -2,6 +2,7 @@ package org.tnt.Events.SlashCommands.Commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.tnt.Database.DatabaseManager;
+import org.tnt.Database.Schema;
 import org.tnt.DescriptionCommands.DescriptionCommands;
 import org.tnt.Localization.LocalizationManager;
 import org.tnt.Localization.Message.LocalizationMessage;
@@ -33,14 +34,17 @@ public class Settings {
 
     //Основные команды
     private void help(){
-        localization.setLanguage("RU").atMessage("settings help");
+        /*localization.setLanguage("RU").atMessage("settings help");
         String[][] fields = new String[][]{
                 {localization.atField("help").getTitle(), localization.atField("help").getDescription()},
                 {localization.atField("initialization").getTitle(), localization.atField("initialization").getDescription()},
                 {localization.atField("register").getTitle(), localization.atField("register").getDescription()}
         };
         localization.atMessage("settings help");
-        event.replyEmbeds(description.embedField(localization.getTitle(), localization.getDescription(), fields)).queue();
+        event.replyEmbeds(description.embedField(localization.getTitle(), localization.getDescription(), fields)).queue();*/
+
+        Schema schema = new Schema(event.getGuild().getId());
+
     }
 
     private void register() {

@@ -20,7 +20,7 @@ public class EventManager extends ListenerAdapter {
     private final RPG rpg = new RPG();
     @Override
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
-        sqlManager.init(event);
+        sqlManager.init(event.getGuild().getId());
         slashCommandGui.init(event);
     }
 
