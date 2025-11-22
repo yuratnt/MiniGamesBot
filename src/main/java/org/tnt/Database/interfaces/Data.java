@@ -1,4 +1,6 @@
 package org.tnt.Database.interfaces;
 
-public class Data {
+public interface Data {
+    String getString();
+    int getInt();
 }

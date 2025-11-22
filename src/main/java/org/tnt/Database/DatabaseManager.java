@@ -1,11 +1,9 @@
 package org.tnt.Database;
 
 import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static org.tnt.MiniGamesBot.connectionSQL;
 
@@ -40,9 +38,10 @@ public class DatabaseManager {
         createTable(guildId,"settings", settingsData);
     }
 
-    public boolean createSchema(String name) {
+    public boolean createSchema(@NotNull String name) {
         try {
             Statement createTable = con.createStatement();
+
             createTable.executeUpdate(
                     "CREATE SCHEMA `" + name + "`;");
 
@@ -54,9 +53,10 @@ public class DatabaseManager {
         }
     }
 
-    public boolean dropSchema(String name) {
+    public boolean dropSchema(@NotNull String name) {
         try {
             Statement createTable = con.createStatement();
+
             createTable.executeUpdate(
                     "DROP SCHEMA `" + name + "`;");
 
@@ -67,14 +67,14 @@ public class DatabaseManager {
             return false;
         }
     }
-    public boolean createTable(String schema, String name, String[] dataType) {
+    public boolean createTable(@NotNull String schema, @NotNull String name, @NotNull String[] dataType) {
         try {
             for (String s : dataType) sqlData.append(s).append(",\n");
             sqlData.deleteCharAt(sqlData.length() - 2);
 
             Statement createTable = con.createStatement();
             createTable.executeUpdate(
-                    "CREATE TABLE `" + schema +"`.`" + name + "` (" +
+                    "CREATE TABLE `" + schema + "`.`" + name + "` (" +
                             sqlData + ")"
             );
             sqlData.delete(0, sqlData.length() - 1);
@@ -83,48 +83,6 @@ public class DatabaseManager {
         } catch (Exception e) {
             System.out.println("Error creating table " + name);
             return false;
-        }
-    }
-
-    public boolean insertData(String schema, String table, String[][] data) {
-        try {
-            if (schema == null) return false;
-            if (table == null) return false;
-
-            for (String[] row : data) {
-                sqlData.append("`").append(row[0]).append("`, ");
-            }
-            sqlData.deleteCharAt(sqlData.length() - 2);
-            sqlData.append(") VALUES (");
-            for (String[] row : data) {
-                sqlData.append("'").append(row[1]).append("'").append(", ");
-            }
-            sqlData.deleteCharAt(sqlData.length() - 2);
-
-            Statement insertData = con.createStatement();
-            insertData.executeUpdate("INSERT INTO `" + schema + "`.`" + table +"` (" + sqlData + ");");
-            sqlData.delete(0, sqlData.length() - 1);
-            return true;
-        }
-        catch (Exception e) {
-            System.out.println("Error inserting data: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public String getData(String schemaId, String name, String dataType) {
-        try {
-            Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM " + schemaId + "." + name + " WHERE id = value;"
-            );
-
-            while (resultSet.next()) {
-                return resultSet.getString(dataType);
-            }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 }
